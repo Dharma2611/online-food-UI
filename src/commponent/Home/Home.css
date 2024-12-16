@@ -1,0 +1,13 @@
+.banner {
+  background-image: url("https://cdn.pixabay.com/photo/2021/09/20/06/55/spaghetti-6639970_1280.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 90vh;
+}
+.cover {
+  width: 100%;
+  height: 90vh;
+  background-color: black;
+  opacity: 0.4;
+}
