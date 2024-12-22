@@ -55,13 +55,13 @@ export const Carts = () => {
   const handleOpenAddress = () => {
     setOpen(true);
   };
-  // console.log("cart in ", cart.cart.items[0]?.food.restaurant.id);
+  console.log("cart in ", cart.cartItems);
 
   const handleSubmit = (values, { resetForm }) => {
     const data = {
       jwt: localStorage.getItem("jwt"),
       order: {
-        restaurantId: cart.cart.items[0].food.restaurant.id,
+        restaurantId: cart.cartItems[0]?.food?.restaurant.id,
         deliveryAddress: {
           fullname: auth.user?.fullname,
           streetAddress: values.streetAddress,

@@ -78,26 +78,34 @@ export const addItemToCart = (reqData) => {
   };
 };
 
-export const updateCartItem = (reqData) => {
+export const updateCartItem = (reqData = {}) => {
   console.log("Request data for updateCartItem:", reqData);
   return async (dispatch) => {
     dispatch({ type: UPDATE_CART_ITEM_REQUEST });
     try {
-      if (!reqData.data || !reqData.data.cartItemId) {
+      const { data, jwt } = reqData;
+      if (!data || !data.cartItemId) {
         throw new Error("Cart item ID is required for updating.");
       }
+      if (!jwt) {
+        throw new Error("Authorization token (JWT) is required.");
+      }
 
-      const { data } = await api.put(`/api/cart-item/update`, reqData.data, {
+      const response = await api.put(`/api/cart-item/update`, data, {
         headers: {
-          Authorization: `Bearer ${reqData.jwt}`,
+          Authorization: `Bearer ${jwt}`,
         },
       });
 
-      console.log("Updated cart item successfully:", data);
-      dispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload: data });
+      console.log("Updated cart item successfully:", response.data);
+      dispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload: response.data });
     } catch (error) {
-      console.log("error catch", error);
-      dispatch({ type: UPDATE_CART_ITEM_FAILURE, payload: error.message });
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "An unexpected error occurred";
+      console.error("Error updating cart item:", errorMessage);
+      dispatch({ type: UPDATE_CART_ITEM_FAILURE, payload: errorMessage });
     }
   };
 };

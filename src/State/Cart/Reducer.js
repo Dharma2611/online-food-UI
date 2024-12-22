@@ -31,7 +31,7 @@ export const cartReducer = (state = intialState, action) => {
       // console.log("aadasdss cart", ...state.cartItems);
       return {
         ...state,
-        cartItems: [action.payload, ...state.cartItems],
+        cartItems: [...state.cartItems, action.payload],
         loading: false,
         error: null,
       };

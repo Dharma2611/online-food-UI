@@ -20,14 +20,13 @@ export const createOrder = (reqData) => {
           Authorization: `Bearer ${reqData.jwt}`,
         },
       });
-      if (data.payment_url) {
-        window.location.href = data.payment_url;
-      }
+
+      dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
+
       console.log("create Order data", data);
-      dispatch({ type: CREATE_ORDER_SUCCESS });
     } catch (error) {
       console.log("create Order error", error);
-      dispatch({ type: CREATE_ORDER_FAILURE, error });
+      dispatch({ type: CREATE_ORDER_FAILURE, payload: error });
     }
   };
 };
@@ -49,16 +48,16 @@ export const getUsersOrders = (jwt) => {
   };
 };
 
-export const getUserNotificationAction = () => {
-  return async (dispatch) => {
-    dispatch({ type: GET_USER_NOTIFICATION_REQUEST });
-    try {
-      const { data } = await api.get("/api/notification");
-      console.log("notification data", data);
-      dispatch({ type: GET_USER_NOTIFICATION_SUCCESS, data });
-    } catch (error) {
-      console.log("notification error", error);
-      dispatch({ type: GET_USER_NOTIFICATION_FAILURE, error });
-    }
-  };
-};
+// export const getUserNotificationAction = () => {
+//   return async (dispatch) => {
+//     dispatch({ type: GET_USER_NOTIFICATION_REQUEST });
+//     try {
+//       const { data } = await api.get("/api/notification");
+//       console.log("notification data", data);
+//       dispatch({ type: GET_USER_NOTIFICATION_SUCCESS, data });
+//     } catch (error) {
+//       console.log("notification error", error);
+//       dispatch({ type: GET_USER_NOTIFICATION_FAILURE, error });
+//     }
+//   };
+// };
